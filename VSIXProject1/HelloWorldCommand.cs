@@ -69,7 +69,7 @@ namespace VSIXProject1
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
-            string message = "Hello World from VSIXProject1!";
+            string message = "Hello World from VSIXProject1 test!";
             string title = "Hello World Command";
 
             VsShellUtilities.ShowMessageBox(
