@@ -1,0 +1,61 @@
+name: Build and Release VSIX
+
+on:
+  push:
+
+permissions:
+  contents: write
+
+env:
+  MANIFEST_PATH: VSIXProject1/source.extension.vsixmanifest
+
+jobs:
+  build-and-release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Set VSIX version from run number
+        id: version
+        shell: pwsh
+        run: |
+          $version = "1.0.${env:GITHUB_RUN_NUMBER}"
+          [xml]$manifest = Get-Content -Path "${env:MANIFEST_PATH}"
+          $namespaceUri = "http://schemas.microsoft.com/developer/vsx-schema/2011"
+          $ns = New-Object System.Xml.XmlNamespaceManager($manifest.NameTable)
+          $ns.AddNamespace("vsx", $namespaceUri)
+          $identity = $manifest.SelectSingleNode("/vsx:PackageManifest/vsx:Metadata/vsx:Identity", $ns)
+          if (-not $identity) { throw "Identity node not found in VSIX manifest." }
+          $identity.SetAttribute("Version", $version)
+          $manifest.Save("${env:MANIFEST_PATH}")
+          "version=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+
+      - name: Build solution (Release)
+        run: dotnet build VSIXProject1.slnx --configuration Release
+
+      - name: Locate VSIX output
+        id: vsix
+        shell: pwsh
+        run: |
+          $vsix = Get-ChildItem -Path "VSIXProject1/bin/Release" -Filter "*.vsix" -Recurse |
+            Where-Object { $_.Name -notlike "*.vsixmanifest" } |
+            Select-Object -First 1
+          if (-not $vsix) { throw "VSIX package not found under VSIXProject1/bin/Release." }
+          "path=$($vsix.FullName)" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+
+      - name: Create GitHub Release and upload VSIX
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: VSIX v${{ steps.version.outputs.version }}
+          generate_release_notes: true
+          files: ${{ steps.vsix.outputs.path }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
