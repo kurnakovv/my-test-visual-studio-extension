@@ -1,12 +1,9 @@
 name: Deploy VSIX Release
 
 on:
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: "Release tag (example: v1.2.3 or 1.2.3)"
-        required: true
-        type: string
+  release:
+    types:
+      - published
 
 permissions:
   contents: write
@@ -22,7 +19,7 @@ jobs:
       - name: Checkout by tag
         uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.tag }}
+          ref: ${{ github.event.release.tag_name }}
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -33,7 +30,7 @@ jobs:
         id: release_meta
         shell: pwsh
         run: |
-          $tag = "${{ inputs.tag }}"
+          $tag = "${{ github.event.release.tag_name }}"
           $version = $tag.TrimStart('v')
 
           if ($version -notmatch '^\d+\.\d+\.\d+(\.\d+)?$') {
@@ -69,13 +66,10 @@ jobs:
           if (-not $vsix) { throw "VSIX package not found under VSIXProject1/bin/Release." }
           "path=$($vsix.FullName)" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
 
-      - name: Create stable GitHub Release and upload VSIX
+      - name: Upload VSIX to existing GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.release_meta.outputs.release_tag }}
-          name: ${{ steps.release_meta.outputs.release_name }}
-          prerelease: false
-          generate_release_notes: true
           files: ${{ steps.vsix.outputs.path }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
