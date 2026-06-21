@@ -43,9 +43,16 @@ jobs:
           $namespaceUri = "http://schemas.microsoft.com/developer/vsx-schema/2011"
           $ns = New-Object System.Xml.XmlNamespaceManager($manifest.NameTable)
           $ns.AddNamespace("vsx", $namespaceUri)
+
           $identity = $manifest.SelectSingleNode("/vsx:PackageManifest/vsx:Metadata/vsx:Identity", $ns)
           if (-not $identity) { throw "Identity node not found in VSIX manifest." }
           $identity.SetAttribute("Version", "${{ steps.release_meta.outputs.version }}")
+          $identity.SetAttribute("Id", "$($identity.GetAttribute('Id')).Preview")
+
+          $displayName = $manifest.SelectSingleNode("/vsx:PackageManifest/vsx:Metadata/vsx:DisplayName", $ns)
+          if (-not $displayName) { throw "DisplayName node not found in VSIX manifest." }
+          $displayName.InnerText = "$($displayName.InnerText) Preview"
+
           $manifest.Save("${env:MANIFEST_PATH}")
 
       - name: Build solution (Release)
