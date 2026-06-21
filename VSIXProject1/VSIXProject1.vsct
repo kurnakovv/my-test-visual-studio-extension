@@ -36,7 +36,7 @@
     </Buttons>
 
     <Bitmaps>
-      <Bitmap guid="guidImages" href="biak-icon2.png" usedList="bmpPic1" />
+      <Bitmap guid="guidImages" href="biak_cursed.png" usedList="bmpPic1" />
     </Bitmaps>
   </Commands>
 
