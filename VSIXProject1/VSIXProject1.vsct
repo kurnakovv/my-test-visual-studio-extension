@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable">
+  <Extern href="stdidcmd.h" />
+  <Extern href="vsshlids.h" />
+
+  <Symbols>
+    <GuidSymbol name="guidVSIXProject1Package" value="{6acd2bd0-ae93-481f-84cc-9110e542bc33}" />
+    <GuidSymbol name="guidHelloWorldCmdSet" value="{b7e6a5c9-2d4e-4f3a-9c1b-8a7f6e5d4c3b}">
+      <IDSymbol name="MyToolsMenuGroup" value="0x1020" />
+      <IDSymbol name="MyToolbarGroup" value="0x1030" />
+      <IDSymbol name="cmdidHelloWorld" value="0x0100" />
+    </GuidSymbol>
+    <GuidSymbol name="guidImages" value="{c4f0f85f-67f0-4ee2-9ef1-9a30c13fd7c7}">
+      <IDSymbol name="bmpPic1" value="1" />
+    </GuidSymbol>
+  </Symbols>
+
+  <Commands package="guidVSIXProject1Package">
+    <Groups>
+      <Group guid="guidHelloWorldCmdSet" id="MyToolsMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
+      </Group>
+      <Group guid="guidHelloWorldCmdSet" id="MyToolbarGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_TOOL_MAINMENU" />
+      </Group>
+    </Groups>
+
+    <Buttons>
+      <Button guid="guidHelloWorldCmdSet" id="cmdidHelloWorld" priority="0x0100" type="Button">
+        <Parent guid="guidHelloWorldCmdSet" id="MyToolsMenuGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <Strings>
+          <ButtonText>Hello World</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+
+    <Bitmaps>
+      <Bitmap guid="guidImages" href="biak-icon2.png" usedList="bmpPic1" />
+    </Bitmaps>
+  </Commands>
+
+  <CommandPlacements>
+    <CommandPlacement guid="guidHelloWorldCmdSet" id="cmdidHelloWorld" priority="0x0100">
+      <Parent guid="guidHelloWorldCmdSet" id="MyToolbarGroup" />
+    </CommandPlacement>
+  </CommandPlacements>
+</CommandTable>
