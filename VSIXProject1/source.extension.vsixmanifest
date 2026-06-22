@@ -6,10 +6,11 @@
     <Description>Test description</Description>
     <MoreInfo>https://google.com</MoreInfo>
     <License>LICENSE.txt</License>
-	<ReleaseNotes>Test release notes</ReleaseNotes>
-	<Icon>biak-for-vsix.png</Icon>
-	<PreviewImage>biak-for-vsix.png</PreviewImage>
-	<Tags>test</Tags>
+    <ReleaseNotes>Test release notes</ReleaseNotes>
+    <Icon>biak-for-vsix.png</Icon>
+    <PreviewImage>biak-for-vsix.png</PreviewImage>
+    <Tags>test</Tags>
+    <Preview>false</Preview>
   </Metadata>
   <Installation>
     <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0, 16.0)">
