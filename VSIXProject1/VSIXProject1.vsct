@@ -30,7 +30,7 @@
         <Parent guid="guidHelloWorldCmdSet" id="MyToolsMenuGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
-          <ButtonText>Hello World</ButtonText>
+          <ButtonText>Hello World from biak!</ButtonText>
         </Strings>
       </Button>
     </Buttons>
