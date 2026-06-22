@@ -6,10 +6,10 @@
     <Description>Test description</Description>
     <MoreInfo>https://google.com</MoreInfo>
     <License>LICENSE.txt</License>
-    <ReleaseNotes>Test release notes</ReleaseNotes>
-    <Icon>test-icon.png</Icon>
-    <PreviewImage>test-icon.png</PreviewImage>
-    <Tags>test</Tags>
+	<ReleaseNotes>Test release notes</ReleaseNotes>
+	<Icon>biak-for-vsix.png</Icon>
+	<PreviewImage>biak-for-vsix.png</PreviewImage>
+	<Tags>test</Tags>
   </Metadata>
   <Installation>
     <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0, 16.0)">
@@ -48,22 +48,22 @@
     <InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[17.0, 18.5)">
       <ProductArchitecture>arm64</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[18.5, )">
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.14, )">
       <ProductArchitecture>amd64</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[18.5, )">
+    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[17.14, )">
       <ProductArchitecture>amd64</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[18.5, )">
+    <InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[17.14, )">
       <ProductArchitecture>amd64</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[18.5, )">
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.14, )">
       <ProductArchitecture>arm64</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[18.5, )">
+    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[17.14, )">
       <ProductArchitecture>arm64</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[18.5, )">
+    <InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[17.14, )">
       <ProductArchitecture>arm64</ProductArchitecture>
     </InstallationTarget>
   </Installation>
