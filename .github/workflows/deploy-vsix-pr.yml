@@ -73,6 +73,15 @@ jobs:
           $identity.SetAttribute("Id", "$($identity.GetAttribute('Id')).PR")
           $displayName.InnerText = "$($displayName.InnerText) PR"
 
+          $preview = $manifest.SelectSingleNode("/vsx:PackageManifest/vsx:Metadata/vsx:Preview", $ns)
+          if (-not $preview) {
+            $metadata = $manifest.SelectSingleNode("/vsx:PackageManifest/vsx:Metadata", $ns)
+            if (-not $metadata) { throw "Metadata node not found in VSIX manifest." }
+            $preview = $manifest.CreateElement("Preview", $namespaceUri)
+            [void]$metadata.AppendChild($preview)
+          }
+          $preview.InnerText = "true"
+
           $manifest.Save("${env:MANIFEST_PATH}")
 
           "VSIX_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append

@@ -53,6 +53,15 @@ jobs:
           if (-not $displayName) { throw "DisplayName node not found in VSIX manifest." }
           $displayName.InnerText = "$($displayName.InnerText) Preview"
 
+          $preview = $manifest.SelectSingleNode("/vsx:PackageManifest/vsx:Metadata/vsx:Preview", $ns)
+          if (-not $preview) {
+            $metadata = $manifest.SelectSingleNode("/vsx:PackageManifest/vsx:Metadata", $ns)
+            if (-not $metadata) { throw "Metadata node not found in VSIX manifest." }
+            $preview = $manifest.CreateElement("Preview", $namespaceUri)
+            [void]$metadata.AppendChild($preview)
+          }
+          $preview.InnerText = "true"
+
           $manifest.Save("${env:MANIFEST_PATH}")
 
       - name: Build solution (Release)
